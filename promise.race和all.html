@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+    <script>
+        let pro1 = new Promise((res, rej) => {
+            let num = Math.random()
+            if (num > 0.5) {
+
+                res("pro1运行了")
+            }
+        }).then(num => num)
+
+
+        let pro2 = new Promise((res, rej) => {
+            res(666)
+        }).then(res => setTimeout(() => {
+            console.log(res)
+            return res
+        }, 600))
+
+
+
+        let pro3 = () => {
+            return "pro3运行了"
+        }
+        let pro4 = () => {
+            setTimeout(() => {
+                throw new Error("出错了")
+            }, 1000)
+
+        }
+
+
+        //如果promise.all中是同步的，同步中有一个抛出错误，则不会往下执行，直接抛出错误；
+        //如果promise.all中是异步的，则all数组中抛出错误的往后不再执行
+
+        Promise.all([pro1, pro2, pro3(), pro4()]).then(res => {
+            console.log(res)//结果只包含返回值，不会包括报错
+        })
+
+        //上面抛出错误，这里开始不再执行，只会执行抛出错误之前的代码
+        console.log(1234)
+
+
+
+
+        //promise.race，那个快就用那哪个，如果数组中包含抛出错误，
+        //则看是异步的错误还是同步的错误,如果抛出错误在最快运行的之前，
+        //则不会有返回，直接报错
+        //如果抛出错误不是最快的，则先把最快的返回后，然后再去报错
+        // Promise.race([pro1, pro2, pro3(), pro4()]).then(res => {
+        //     console.log("最快的是", res)
+        // })
+
+
+
+
+
+    </script>
+</body>
+
+</html>

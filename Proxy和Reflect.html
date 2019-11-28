@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    //定义一个es6对象
+    // let oData={
+    //     val:'duyi'
+    // }
+
+
+
+    let oData=[];
+
+    //定义一个代理用new Proxy(代理对象,{配置})，之后会返回一个对象，要是用变量接收
+    let oProxyData=new Proxy(oData,{//Proxy代理对象
+        //和Object.defined()的参数有些不同
+        get (target,key,receiver){
+            console.log(target,key,receiver);//打印{val: "duyi"} "val" Proxy {val: "duyi"}
+            // return target[key]
+            // 高级写法用Reflect,映射
+            return Reflect.get(target,key)//返回映射
+        },
+        set(target,key,value,receiver){
+            console.log(target,key,value,receiver);
+            update()
+            return Reflect.get(target,key,value);
+        }
+    });
+    function update() {
+        console.log('更新咯');
+    }
+
+    oProxyData[0]=10;//使用代理对象后，不能在去使用原先的变量进行操作
+    //返回
+    // "0" 10 Proxy {}
+    //  更新咯
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

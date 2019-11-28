@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    var obj={
+        name:'cst'
+    }
+    // console.log(delete obj.name);//返回true非全局定义的变量具有可配置性 configable
+
+    var a=10;
+    console.log(window.a)//返回false，全局定义的变量具有不可配置型
+
+    // 可枚举,返回name
+    for(var i in obj){
+        console.log(i)
+    }
+    console.log(obj._proto_);  //Object
+
+    function test() {  //
+
+    }
+    console.log(test.constructor);//返回Function
+    console.log(Function.prototype);//ƒ () { [native code] }  返回本地代码
+
+
+
+    //如果是新定义的对象的话，默认的writable,enumerable和configurable都是true
+    var obj1={
+        name:'cg'
+    }
+
+    //配置属性方法
+    Object.defineProperty(obj1,'name',{
+        //数据描述符
+        value:'cst',//配置值
+        writable:false,//是否可以修改值，默认false
+        configurable:true,//是否可配置，就是可不可以删除，默认false
+        enumerable:true//是否可枚举，简单来说就是遍历,默认false
+    })
+
+    obj1.name=10;
+    console.log(obj1.name);//返回的是cst，因为writeable为false
+
+
+    // Object.defineProperty(obj1,'name',{value:1})//obj1的Object.defineProperty虽然writeable是false,
+    //但是利用value对obj1的value进行重写，而不是obj1.name=1的方式
+
+
+
+
+    //存取描述符，不能和writable和configurable一起使用
+    var obj2={}
+    var tempValue='111';
+    Object.defineProperty(obj2,'name',{ //为name设置属性配置
+        //不写value，用局部的get和set函数更改全局变量值
+        configurable:true,
+        enumerable:true,
+        //存描述符
+        get:function () {
+            return tempValue //没有value的话，如果全局上也有一个同名的变量，局部的get会拿到全局
+        },
+        //取描述符
+        set:function (newValue) {
+            tempValue=newValue //没有value的话，如果全局上也有一个同名的变量，局部的get会改变全局
+        }
+    })
+    console.log(tempValue);//返回空111
+    console.log(obj2.name) //返回111
+    obj2.name=100;//设置值的时候默认调用set存描述符
+    console.log(obj2.name)//获取obj2.name时候默认调用了get方法
+
+
+    //存取描述符简易写法，写在对象中，另一种用Object.definedProperty(对象，属性名，属性配置)
+    var obj3={
+        tempValue:'laoda',//暂时替代name值
+        get name(){  //获取name属性时候
+            return this.tempValue
+        },
+        set name(value){ //设置name属性的时候
+            this.tempValue=value
+        }
+    }
+    obj3.name=100;//会调用obj3里面的get name()方法
+    console.log(obj3.name)//打印100，会调用obj3里面的set name()方法
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

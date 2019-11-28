@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+    // localStorage里面的值只能存储字符串
+
+    //设置localStorage的两种方式
+    localStorage.name='panda';
+    localStorage.setItem('sex','male');
+
+    //获取localStorage的两种方式
+    console.log(localStorage.getItem('name'));
+    console.log(localStorage.sex);
+
+    //删除localStorage的方式
+    // localStorage.clear()
+
+
+    //如果要在localStorage里面存储对象以及数组，要借助JSON.stringify和JSON.parse来做,以json格式字符串存储
+
+    // 在localStorage里面存储字符串
+    // localStorage.arr=[1,2,3,4,5,6,7,8,9]
+    // console.log(localStorage.arr);//1,2,3,4,5,6,7,8,9会全部拆开，不再是字符串
+
+        localStorage.arr=JSON.stringify([1,2,3,4,5,6,7,8,9])
+        console.log(JSON.parse(localStorage.arr))
+
+
+    //在localStorage里面存储对象,直接写会调用Object.prototype.toString方法
+    localStorage.obj=JSON.stringify({
+        name:'laoda',
+        age:18
+    })
+    console.log(JSON.parse(localStorage.obj))
+
+
+
+    sessionStorage.name='kail';//临时存储，当前页关闭删除
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

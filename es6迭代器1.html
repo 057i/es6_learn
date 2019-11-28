@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    let arr=[1,2,3]
+
+
+    function outerIterator(target) {
+
+        let nowIndex=0;
+        let next=()=>{
+            return {
+                value:target[nowIndex],
+                isLast:target.length==++nowIndex
+            }
+
+        }
+        return {
+            next
+        }
+    }
+    let oIt=outerIterator(arr)
+    // oIt.next();//类似游标前进
+
+
+
+
+
+
+
+    // 第七种基本数据类型Symbol
+    let os=Symbol('abc')
+    console.log(os);//打印Symbol(abc)
+
+    let os2=Symbol({
+        name:'cst'
+    })
+    console.log(os2);//打印Symbol([object Object])
+    //原因是Symbol存储对象时候，会调用toString方法，当没有写toString方法的时候，会去Object.prototype.toString找到使用
+
+    let os3=Symbol({
+        name:'cg',
+        toString:function () {
+            return this.name
+        }
+    })
+    console.log(os3)//Symbol(cg)
+    let os4=(5)
+    console.log(os4)
+    let os5=Symbol([1,2,3,4])
+    console.log(os5)
+    let os6=Symbol('hfkjdsjk')
+    console.log(os6)
+
+//特例，创建两个Symbol对象存储相同值，利用解构将他们作为属性名时候却不会覆盖
+    let os7=Symbol('abc');
+    let os8=Symbol('abc')
+    let obj={
+        [os7]:'cst',
+        [os8]:'cg'
+    }
+
+
+
+
+
+
+    //Generator是iterator的升级版，不用写iterator那么多的代码就可以实现，配合yield使用(遇到停止)
+    //Generator生成器函数的写法
+
+    function *test(){
+        yield 'a';
+        yield 'b';
+        yield 'c';
+        yield 'd';
+        return 'e'
+    }
+    let gen=test();
+    //Generator有iterator里面有的所有属性和方法
+    //next方法类似游标前进，遇到yield停止
+    console.log(gen.next());//{value: "a", done: false}
+    console.log(gen.next());//{value: "b", done: false}
+    console.log(gen.next());//{value: "c", done: false}
+    console.log(gen.next());//{value: "d", done: false}
+    console.log(gen.next());//{value: "e", done: true}
+    console.log(gen.next());//{value: undefined, done: true}
+
+
+
+
+
+
+    //Generator的常用写法----蛇形的执行方式，遇到yield就停止
+    function *test1(){
+        let value1=yield 'a';
+        console.log(value1)
+        let value2=yield 'b';
+        console.log(value2)
+        let value3=yield 'c';
+        console.log(value3);
+        let value4=yield 'd';
+        console.log(value4)
+        return 'e'
+    }
+    let gen1=test1();
+    //Generator有iterator里面有的所有属性和方法
+    //next方法类似游标前进，遇到yield停止
+    console.log(gen1.next());//类似开启并初始化游标，遇到yield停止
+    console.log(gen1.next('aaa'));
+    console.log(gen1.next('bbb'))
+    // console.log(gen1.next());//{value: "b", done: false}
+    // console.log(gen1.next());//{value: "c", done: false}
+    // console.log(gen1.next());//{value: "d", done: false}
+    // console.log(gen1.next());//{value: "e", done: true}
+    // console.log(gen1.next());//{value: undefined, done: true}
+
+    // 蛇形执行
+    // function *test1(){
+    //              yield 'a';
+    //let value1=
+    //              yield 'a';
+    //let value2=
+    //     console.log(value2)
+    //              yield 'a';
+    //let value3=
+    //     console.log(value3)
+    //              yield 'a';
+    //let value4=
+    //     console.log(value4)
+    //     return 'e'
+    // }
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

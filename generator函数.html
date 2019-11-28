@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //例1
+        // 注意这里使用的是同一个x
+        function* generator(x) {
+            yield x + 5   //10
+            console.log(x)//5
+            yield x + 3//8
+            yield x + 8//13
+            return x
+        }
+
+        let iteratorObj = generator(5)
+
+        iteratorObj.next()//{value: 10, done: false}
+        iteratorObj.next()//{value: 8, done: false}
+        iteratorObj.next()//{value: 13, done: false}
+        iteratorObj.next()//{value: undefined, done: true}
+
+
+
+        //例2，蛇形执行
+
+        function* generator1(x) {
+            var y = yield x += 5
+            console.log(y)
+            y = yield x += 3
+            console.log(y)
+            y = yield x +=8
+            console.log(y)
+            return x
+        }
+        
+        let oG=generator1(3)
+
+
+
+
+
+
+
+
+
+        // iterator是es6中的迭代器,generator
+        // 有三个作用
+
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>

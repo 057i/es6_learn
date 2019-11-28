@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let obj = {
+            0: 1,
+            1: 2,
+            length: 2
+        }
+
+        // 1.Array.from()转迭代器属性对象为数组
+        let list = Array.from(obj);
+
+
+        // 2.[].slice.call
+        let list1=[].slice.call(obj)
+
+
+
+    //    因为类数组对象没有迭代器属性iterator，所以不能用...展开,但是es7中可以将对象展开成对象
+    // let list2=[...obj];错误代码
+
+
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+
+        let obj = {
+            0: 'p',
+            1: 'a',
+            2: 'b',
+            3: 'c',
+            length: 4,
+            //标准Iterator写法(部署Iterator接口，使变量具有可迭代功能)
+            [Symbol.iterator]: function () {
+                let curIndex = 0;
+                //箭头函数返回
+                let next = () => {
+                    //返回迭代的对象
+                    return {
+                        value: this[curIndex],
+                        done: this.length == curIndex++
+                    }
+                }
+                //返回一个对象
+                return {
+                    next
+                }
+            }
+        }
+        //配合展开式不断展开不断调用
+        console.log([...obj])
+
+
+
+
+
+
+
+        //部署Symbol.iterator，使得不可迭代数据变得可迭代
+        let obj1 = {
+            0: 'a',
+            1: 'b',
+            2: 'c',
+            length: 3,
+            [Symbol.iterator]: function () {
+                let curIndex = 0;
+                let next = () => {
+                    return {
+                        value: this[curIndex],
+                        done: this.length == curIndex++
+                    }
+                }
+                //这里应该返回的是一个对象
+                return {
+                    next
+                }
+            }
+        }
+        console.log([...obj1])
+
+
+
+
+        let obj4 = {
+            0: 1,
+            1: 2,
+            2: 3,
+            length: 3,
+            [Symbol.iterator]: function () {
+                let curIndex = 0;
+                let next = () => {
+                    return {
+                        value: this[curIndex],
+                        done: this.length == curIndex++
+                    }
+
+                }
+
+                return {
+                    next
+                }
+            }
+        }
+
+
+        for (let i of obj4) {
+            console.log(i)
+        }
+
+
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>

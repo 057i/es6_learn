@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    // 模拟es6语法降级成es5
+    //es6中的对象不能够不new就使用
+
+    //创建一个函数用来判断是否是new出来的对象，如果不是，就报错，思路是从原型上去找
+    function _classCallCheak(_this, _constructor) {
+        //判断_this的原型是不是_constructor
+        if (!(_this instanceof _constructor)) {
+            throw "Uncaught TypeError: Class constructor Plane cannot be invoked without 'new'"
+        } else {
+            console.log('这是new出来的')
+        }
+    }
+
+    //定义属性函数
+    function _defineProperties(target, props) {
+        props.forEach(function (ele, index) {
+            //这里必须绑定的是ele下面的key,因为key属性代表的是有属性被触发时候的属性名！！！！！
+            Object.defineProperty(target, ele.key, {
+                //这里的数据，描述符只定义了三个，没有定义的默认false
+                value: ele.value,
+                writable: true,
+                configurable: true
+            })
+        })
+
+    }
+
+
+    //处理原型上的公有属性和函数自身的静态属性
+    function _createClass(_constructor, _prototypeProperties, _staticProperties) {
+        //判断是否传了原型链属性，有的话在构造函数上赋值
+        if (_prototypeProperties) {
+            console.log(111)
+            _defineProperties(_constructor.prototype, _prototypeProperties);
+        }
+        //判断是否传了静态属性，有的话就往函数身上加
+        if (_staticProperties) {
+            _defineProperties(_constructor, _staticProperties)
+        }
+    }
+
+
+    /*    function Plane() {
+            _classCallCheak(this,Plane)
+        }*/
+
+    // es6语法降级后源码中函数的标准写法，
+    // 创建一个变量接收，函数用立即执行函数返回函数体里的同名函数，防止污染
+    var Plane = (function () {
+        function Plane(name) {
+            //做校验，预防没有new就直接使用
+            _classCallCheak(this, Plane)
+            this.name = name || '普通飞机';
+            this.blood = 100;
+
+        }
+
+        //这里传参数时候因为属性会有很多个，所以选用数组包对象的形式
+        _createClass(Plane, [{
+                key: 'fly',
+                value: function () {
+                    console.log('fly');
+                }
+            }],
+            [{
+                key: 'alive',
+                value: function () {
+                    console.log(true)
+                }
+            }]);
+
+        return Plane
+    })();
+
+
+    var oP = new Plane();//返回这是new出来的
+
+    // Plane();//报错，抛出异常
+
+
+    //extend继承方法降级成es5写法
+    //构建一个专门做继承的函数，对应原型链
+    function _inherit(sub, sup) {
+        //对应es6中的super
+        Object.setPrototypeOf(sub.prototype, sup.prototype)
+    }
+
+    var AttackPlane = (function (Plane) {
+        //构建继承原型链
+        _inherit(AttackPlane, Plane);
+
+        function AttackPlane(name) {
+            //检测是否new
+            _classCallCheak(this, Plane);
+            Plane.call(this, name);//改变this
+
+        }
+
+        _createClass(AttackPlane, [{
+            key: 'show',
+            value: function () {
+                console.log('Attackplane')
+            }
+        }], [{
+            key: 'alive',
+            value: function () {
+                console.log('die')
+            }
+        }])
+
+
+        return AttackPlane
+
+    })(Plane);
+
+
+
+    var attackPlane = new AttackPlane('新型飞机')
+    console.log((attackPlane.show()));//
+    console.log(attackPlane.fly());//fly
+    console.log(AttackPlane.alive())
+
+
+
+</script>
+
+</body>
+</html>

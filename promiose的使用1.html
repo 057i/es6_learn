@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+
+
+    // setTimeout()是异步的(宏任务),Promise也是异步的（微任务）
+    //微任务的优先级比宏任务来得高,有优先执行权
+
+    //
+    // setTimeout(()=>{
+    //     console.log('setTime');
+    // })
+    // let oP=new Promise((resolve,reject)=>{
+    //
+    //     setTimeout(()=>{
+    //         Math.random()*100>60?resolve('ok'):reject('no');//es6中的promise利用resolve和reject来注册状态以及回调函数
+            //作为promise的状态，然后在oP.then里面会去根据判断调用哪一个函数
+            // resolve(1);//状态如果是resolve或者reject了的话不能再修改
+    //     },1000)
+    //     console.log(0)
+    // })
+    //  oP.then((val)=>{
+    //      console.log('ok'+val)
+    //  },(reason)=>{
+    //      console.log('no'+reason)
+    //  })
+    // console.log(2)
+
+    //重点：根据异步的执行情况：输出顺序应该是先同步，后异步 0 2  okok setTime
+
+
+
+
+
+    //多重promise对象，和ajax中的一样，过多的异步会产生回调地狱，利用then做链式操作，、
+    // 上一次的then返回值作为下一次then的注册函数参数
+    let oP=new Promise((resolve,reject)=>{
+
+        setTimeout(()=>{
+
+
+            resolve(1)
+
+
+            //作为promise的状态，然后在oP.then里面会去根据判断调用哪一个函数
+            // resolve(1);//状态如果是resolve或者reject了的话不能再修改
+        },1000)
+    })
+    oP.then((val)=>{
+        console.log('ok'+val)
+        throw new Error('duyi')
+
+        // reject('no');//如果有多重then组成的话，没有return返回值到下一级，默认都会执行resolve()注册函数，参数为undefined
+        return new Promise((resolve, reject)=>{
+            reject('newPromise ok')
+        })
+
+    },(reason)=>{
+        console.log('no'+reason)
+    }).then((val)=>{
+        console.log('then2'+val)
+    },(reason)=>{
+        console.log('reason2'+reason)
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

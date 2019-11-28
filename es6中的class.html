@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    //es6中将class转变成面向对象的写法，class成为关键字，但是本质还是函数
+
+    //函数中嵌套构造函数(也叫属性)，和java差不多，函数中可以有的属性有
+    // 1.私有属性(constructor里面创建的this) 2.公有属性  3.静态属性
+    // class Plane {
+    //     //constructor(){}可以看作是初始化的函数
+    //     constructor(name) {
+    //         console.log('this is' + name)
+    //         this.width=100;
+    //     }
+    //
+    //     fly() {
+    //         console.log('fly')
+    //     }
+    //
+    //     //es6中不支持等号赋值，如name=10
+    //
+    //     //静态方法，static关键字，定义静态方法后成为该函数的自身方法，不实例化，只有该函数能使用
+    //     static alive() {
+    //         return 'alive'
+    //     }
+    // }
+    //
+    // var plane = new Plane('普通飞机');//
+    // console.log(typeof (Plane));//"function"
+    // plane.fly()//返回fly
+    //
+    // console.log(Plane.alive())//调用函数静态方法
+    //
+    //
+    // class AttackPlane extends Plane{  //继承用关键字extends
+    //     constructor(name){
+    //         super(name);//等同于Plane.call(this,name),这里和java一样，超类，继承父级所有
+    //         this.name=name;
+    //         this.logo='duyi';
+    //         this.width=200;//覆盖之前属性
+    //     }
+    //     attack(){
+    //         console.log('biubiubiu');
+    //     }
+    // }
+    // let attackPlane=new AttackPlane('攻击机');//返回this is攻击机
+    // console.log(attackPlane.__proto__);//返回的是Plane，不是AttackPlane，这里要注意
+    // console.log(attackPlane.width);//200覆盖之前
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

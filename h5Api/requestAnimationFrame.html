@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .main{
+            position: absolute;
+            width: 100px;
+            height:100px;
+            background-color: #abcdef;
+        }
+    </style>
+</head>
+<body>
+    <div class="main"></div>
+<script type="text/javascript">
+
+    var box=document.getElementsByClassName('main')[0];
+    function move() {
+
+        if(box.offsetLeft>700){
+            cancelAnimationFrame(timer);//取消AnimationFrame
+            return
+        }
+        box.style.left=box.offsetLeft+20+'px';
+        var timer=requestAnimationFrame(move);
+    }
+    // setInterval(move,10)
+
+
+    // requestAnimationFrame是专门优化动画效果的api，每秒60帧，可以准时执行每一帧（兼容性极差）
+    //setTimeOut和setInterval如果一帧没执行完是绝对不会执行下一帧的
+
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="demo">
+<div id="show"></div>
+<script>
+    //浅层对象对象监控数据劫持
+    var oDiv=document.getElementById('show');
+    var oInput=document.getElementById('demo');
+    var oData={
+        value:'duyi',
+        name:'cst',
+        sex:{
+            a:5555
+        }
+
+    };
+    oInput.oninput=function () {
+        oData.value=this.value;
+    }
+    function upDate() {
+        oDiv.innerText=oData.value;
+    }
+    upDate()
+
+
+    //监控对象的某个属性是否发生改变函数
+    function Observer(data) {
+        if(!data ||typeof date !='undefined'){
+            return data
+        }
+        //Object.keys()返回对象可枚举属性和方法的数组(将迭代对象转成数组返回，通俗点就是把对象编程数组返回回去)
+        Object.keys(data).forEach(function (key,index) {
+            definedRective(data,key,data[key])
+        })
+
+    }
+    //监控对象函数
+    function definedRective(data,key,val){
+
+        //调用es5的Objetc.defineProperty方法监控值
+        Object.defineProperty(data,key,{
+            get (){
+                console.log(data,key);//data为传过来的对象，key为对象中传过来要监控的
+                console.log('getgetget')
+                return val
+            },
+            set(newVal){
+                if(newVal==val){
+                    return;
+                }
+                val=newVal;
+                upDate();
+            }
+        })
+    }
+
+    Observer(oData)
+</script>
+
+
+
+
+
+
+</body>
+</html>

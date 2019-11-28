@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let obj={wd:5,sd:6}
+    let newObj=JSON.parse(JSON.stringify(obj))
+    proxyObj(obj,newObj)
+
+    function proxyObj(obj, newObj) {
+        //深度克隆一个一模一样的数据在vue内部使用
+        var self = this;
+        for (let temp in obj) {
+            if (obj[temp] instanceof Object) { //判断对象里面是否还嵌套对象
+                proxyObj(obj[temp], newObj[temp])
+            } else {
+                Object.defineProperty(obj, temp, {
+                    get: function () {
+                        console.log(55556)
+                        return newObj[temp]
+                    },
+                    set: function (value) {
+                        console.log(55555)
+                        newObj[temp] = value;
+                    }
+                })
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

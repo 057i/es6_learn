@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="./jquery.js"></script>
+<script type="text/javascript">
+    //es7...运算符展开对象实现克隆
+    // let company = {
+    //     name: 'duyi',
+    //     age: 18
+    // }
+    //
+    // let teachDepartment = {
+    //     leader: {
+    //         name: 'cg',
+    //         age: 20
+    //     },
+    //     personNum: 25
+    // }
+    // //这样子直接展开是浅层克隆
+    // let obj = {
+    //     ...company,
+    //     ...teachDepartment
+    // }
+    // obj.age=19;
+    // console.log(company.age)//打印19，因为拷贝的是引用值
+    //es7中...的规定，拷贝的值改变，拷贝后的引用值不变；
+    //拷贝后的引用值改变，拷贝的值也随之改变
+
+
+
+//es7...运算符的展开对象的特性实现深度克隆，思想是创建一个公共的顶层模板对象，
+    // 在需要它的地方创建一个对象在这个对象中展开即可实现深层克隆(适用于层次相对比较浅的，如果有多层的话用公益课封装的深度克隆)
+    let company={
+        name:'duyi',
+        age:18
+    }
+    let leader={
+        name:'cg',
+        age:20
+    }
+    let teachDepartment={
+        leader:{
+            ...leader
+        },
+        personNum:25
+    }
+    let obj={
+        ...company,
+        ...teachDepartment,
+        leader:{
+            ...leader
+        }
+    }
+
+    obj.leader.name='cst';
+    console.log(teachDepartment.leader.name,leader.name);//返回cg cg，说明没有改变
+
+
+
+    //新奇写法：如果只想实现对象，数组的深度克隆，用JSON的方法可以转换成全新的对象!!!
+    // 如果有函数正则等其他的不行
+    var obj1=JSON.parse(JSON.stringify(teachDepartment))
+    obj1.personNum=111;
+    console.log(obj1.personNum);//111
+    console.log(teachDepartment.personNum)//25
+    // 深度克隆成功
+
+
+
+    //es6新方法，对象拼接，和$.extend()扩展方法一样，返回一个新的对象
+    console.log(Object.assign({},company,teachDepartment))
+    console.log($.extend({},company,teachDepartment))
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

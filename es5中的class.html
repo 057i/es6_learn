@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    //公有飞机属性
+    Plane.prototype.fly=function () {
+        //共有属性
+        console.log('fly');
+    }
+    //构造函数名首字母最好都大写
+    function Plane(name) {
+        //写在构造函数中this的属性都是私有属性
+        this.name=name||'普通飞机';
+        this.blood=100;
+        this.fly=function () {
+            console.log('这是'+name);
+        }
+    }
+
+    //攻击机构造函数
+
+
+    // AttackPlane.prototype=new Plane()；会覆盖原本自身的prototype空间
+
+    //思路一，使用圣杯模式思路,不会影响但是麻烦
+    // var temp=function () {};
+    // temp.prototype=Plane.prototype;
+    // AttackPlane.prototype=new temp();
+
+
+//解决思路二，往原型链上面找
+    // AttackPlane.prototype.__proto__=Plane.prototype;
+
+
+
+    // 思路三，es6中提出了设置原型链方法，不会污染
+    Object.setPrototypeOf(AttackPlane.prototype,Plane.prototype);
+
+
+
+
+
+    var attack=new AttackPlane('攻击机');
+    function AttackPlane(name) {
+        Plane.call(this,name);
+    }
+    AttackPlane.prototype.attack=function () {
+        console.log('biubiubiu');
+    }
+
+
+
+
+
+</script>
+
+</body>
+</html>

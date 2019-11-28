@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input type="text" id="main">
+<!--点击时候执行搜索-->
+<button onclick="search()">搜索</button>
+<div class="main"></div>
+<script type="text/javascript">
+    var data=[{
+        name:'HTML'
+    },{
+        name:'CSS'
+    },{
+        name:'JS'
+    },{
+        name:'dg'
+    },{
+        name:'cg'
+    }];
+
+    function search() {
+        var value=document.getElementById('main').value;
+        var result=data.filter(function (ele) {
+            if(ele.name.indexOf(value)!=(-1)){
+                return value
+            }
+        })
+        render(result);
+        // 将历史像栈一样压入，有三个参数
+        history.pushState({inpValue:value},null,'#'+value);
+    }
+    function render(renderData) {
+        console.log(renderData)
+        var content='';
+        for(var i=0;i<renderData.length;i++){
+            content+=renderData[i].name;
+        }
+        // document.getElementById('main').innerText=content;
+        document.getElementsByClassName('main')[0].innerText=content
+    }
+
+    //事件又先后顺序之说，popstate回退事件的优先级比hashchange的优先级来的高
+
+
+    //回退事件popstate，一回退就触发
+    window.addEventListener('popstate',function (e) {
+        console.log(e)
+        var data=e.state.inpValue;
+        document.getElementById('main').value=data
+        render(data)
+    })
+
+    //hashchange事件，监控锚点值，锚点值一变化就触发
+    window.addEventListener('hashchange',function (e) {
+        console.log(e)
+    })
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>

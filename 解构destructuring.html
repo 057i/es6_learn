@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    let obj = {
+        name: 'cst',
+        age: 18
+    };
+
+
+    // let name, age;
+    //将右侧中的变量名和左侧相匹配，值赋予左侧同名变量
+    // ({name, age} = obj);
+    //
+    // console.log(name,age)//返回cst 18
+
+
+    //创建两个变量的同时，将右侧中同名变量名的值赋予左侧
+    // let {name,age}=obj;
+    // console.log(name,age);//返回cst 18
+
+
+    //创建两个变量的同时更改变量名字，且定义第三个变量赋默认值(有值时候覆盖)
+    let {name: oName,age:oAge,sex='male'}=obj; //冒号为更改变量名，等号为赋默认值
+    console.log(oName,oAge,sex)
+
+
+    function sum(a=10,b=20) { //a和b都赋默认值
+        return a+b
+    }
+    console.log(sum(1))//返回21
+
+    //高版本es不但可以解构对象，还可以解构数组
+    let arr=[1,2,3];
+    let{0:x,1:y,2:z}=arr;//数组解构成对象，因为数组下标解构成对象，下标从0开始
+    console.log(x,y,z);// 1 2 3
+
+
+    
+//    或者直接数组解构数组方法
+    let [a,b,c]=arr;
+    console.log(a,b,c)//1 2 3
+    // let {length}=arr;
+    // console.log(length)//3
+    let [length]=arr;
+    console.log(length)//为什么是1？？？
+
+    //筛掉不要的数据，只保留要的做法
+    let arr1=[1,2,3,{name:'cst'}];
+    let [,,,{name:ooName}]=arr1;
+    console.log(ooName)
+
+
+
+
+    // let sum1=(a,b)=>{ return a+b }
+    let sum2=(a,b)=>[a,b]
+    console.log(a,b)
+    let sum3=(a,b)=>({c:a,d:b})//只在对象里之别
+    sum3(7,8)
+    console.log(a,b,c)
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

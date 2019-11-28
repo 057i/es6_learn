@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+    // 浅层克隆直接连同地址一起拷贝，深层克隆造一个全新的对象
+
+    //Object.assign对象拼接方式实现浅层克隆
+    // let obj={
+    //         a:1,
+    //         b:[5,6,4,],
+    //         c:'fmdslkfml;s',
+    //         d:{
+    //             l:'dsadas',
+    //             c:'4565',
+    //             e:{
+    //
+    //             },
+    //             t:[]
+    //         }
+    // }
+    // let obj1 = Object.assign(obj)
+    // obj.a=567676
+    // console.log(obj1)
+
+
+    // let obj={
+    //     a:1,
+    //     b:[5,6,4,],
+    //     c:'fmdslkfml;s',
+    //     d:{
+    //         l:'dsadas',
+    //         c:'4565',
+    //         e:{
+    //
+    //         },
+    //         t:[]
+    //     }
+    // }
+    // let obj1 = JSON.parse(JSON.stringify(obj))//最简单的深层克隆方式
+    // obj.d={1:5,2:6,3:7,4:8}
+    // console.log(obj1)
+
+
+
+    // es7语法中的...实现深层克隆，这样做事利用es7可以展开对象的方式完全展开每一个对象，
+    // 展开的对象里面不可以再包含引用类型，不然深层克隆失败
+    // let obj={
+    //     a:1,
+    //     b:[5,6,4,],
+    //     c:'fmdslkfml;s',
+    //
+    // }
+    // let d={
+    //     l:'dsadas',
+    //     c:'4565',
+    // }
+    //
+    // let obj1 ={...obj,...d}
+    // obj.a=12314564
+    // d.c=879798
+    // console.log(obj1)
+
+
+
+    // 普通js写深层克隆
+    function deepClone(origin,target){
+        var toStr=Object.prototype.toString;
+        var arrStr='[object Array]';
+        var objStr='[object Object]';
+        for(var prop in origin){
+            //先用typeof判断不为空且为引用值的前提下
+            if(typeof(origin[prop])!==null && typeof(origin[prop])=='object' ){
+                //然后用
+                if(toStr.call(origin[prop])===arrStr){
+                    target[prop]=[];
+                    deepClone(origin[prop],target[prop])
+                }else{
+                    target[prop]={};
+                    deepClone(origin[prop],target[prop])
+                }
+
+            }else{
+                target[prop]=origin[prop]
+
+            }
+        }
+        return target
+
+    }
+
+
+
+    let obj={
+        a:1,
+        b:[5,6,4,],
+        c:'fmdslkfml;s',
+        d:{
+            l:'dsadas',
+            c:'4565',
+            e:{
+
+            },
+            t:[]
+        },
+        p:null
+    }
+    let o={};
+    deepClone(obj,o)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

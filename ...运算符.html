@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+        // ...运算符是es6中新增的运算符，他有两个作用，一个是变量的展开一个是变量的收集
+        //不管是哪一个功能，拥有...运算符的变量位置都必须是最后一个
+
+        // 读的时候function test(...arg){} test(1,2,3) 传参到形参，收集作用
+
+        //写的时候var arg=[1,2,3] console.log(...arg) 变量的展开，es6对应的是数组，es7对应的是对象
+
+        //写的例子（收集作用）
+        function sum(...arg) {//这里的...是收集作用
+            console.log(arg);//...运算符的收集作用，将形参作为数组存储多个形参，相当于arguments
+            let sumNum = 0;
+            arg.forEach(function (ele, index) {
+                sumNum += ele;
+            })
+            return sumNum
+        }
+
+        console.log(sum(1, 2, 3))
+
+
+        //...运算符只能放在最后一个形参变量上，放到其他位置会出错
+        function test(a, b, ...arg) {
+            console.log(a, b, arg)
+        }
+
+        test(10, 20, 'a', 'b', 'c');
+
+
+        //写操作
+        function avearge(...arg) {//写操作，收集
+            arg.sort(function (a, b) {
+                return a - b
+            });
+            arg.pop();//弹出最后一位
+            arg.shift();//弹出第一位
+            // return computedScore.apply(this,arg)//还可以改进成下面，省去this
+            return computedScore(...arg)//读操作，展开
+        }
+
+        function computedScore(...arg) {//读操作，收集
+            console.log(arg)
+            let sum = 0;
+            arg.forEach(function (ele, index) {
+                sum += ele
+            });
+            return sum / arg.length
+        }
+
+        console.log(avearge(90, 97, 80, 50, 79, 46, 100))
+
+
+        //读操作
+        let arr2 = [1, 2, 3, 4, 5];
+        console.log(...arr2)//打印1,2,3,4,5 相当于将数组展开了
+
+        //利用...运算符拼接两个数组，实现和arr.concat一样的功能
+        let arr3 = [4, 5, 6]
+        let arr4 = [7, 8, 10]
+        let arr5 = [...arr3, ...arr4];
+        console.log(arr5);//打印4,5,6,7,8,10
+
+
+        //...运算符在es6时候只能展开数组，在es7时候可以展开对象
+        let obj1 = {
+            a: 123,
+            b: 789
+        }
+        let obj2 = {
+            c: 179,
+            d: 435
+        }
+        let obj3 = { ...obj1, ...obj2 }
+        obj1.a = 777;
+        console.log(obj3.a)//展开克隆之后不会变
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

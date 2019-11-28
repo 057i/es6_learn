@@ -1,0 +1,11 @@
+{
+//  这里必须是严格的json格式写法
+  //告诉编译器使用什么样的预设来编译,编译后是严格模式
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators",{"legacy": true}],
+    ["@babel/plugin-proposal-class-properties",{"loose": true}]
+  ]
+}

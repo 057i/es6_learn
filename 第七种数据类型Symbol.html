@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+    let os=Symbol('abc');
+    let obj={
+        //这里一定要用方括号括起来，不然找不到,表示它是Symbol对象的子类
+        [os]:'cst'
+    }
+    //区别
+    console.log(obj[os]);//cst
+    console.log(obj.os);//undefined
+
+
+    //第七种数据类型
+
+    let os1=Symbol({
+        name:'cst'
+    })
+
+    //返回Symbol([object Object]);//原因是Symbol构造对象时候没有写toString方法
+    //然后默认的就去Object的原型链上面找toString方法
+    console.log(os1);
+
+    let os2=Symbol({
+        name:'cst',
+        toString() {
+            return this.name
+        }
+    })
+
+    console.log(typeof Symbol.iterator,Symbol('Symbol.iterator'))//返回类型是symbol
+
+
+    //Symbol（描述信息），构成独一无二的描述，创建后不可修改
+    //1.做属性名
+    let os3=Symbol()
+    let os4=Symbol()
+    console.log(os3==os4)//false
+    let os5=Symbol("hello")
+    let os6=Symbol("hello")
+    console.log(os5==os6)//false
+
+
+
+
+</script>
+
+</body>
+</html>

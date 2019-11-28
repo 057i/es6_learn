@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div class="main">
+        <p>设备运动信息</p>
+        <div class="devicemotionX"></div>
+        <div class="devicemotionY"></div>
+        <div class="devicemotionZ"></div>
+    </div>
+    <div class="orientation">
+        <p>陀螺仪</p>
+        <div class="orientationX"></div>
+        <div class="orientationY"></div>
+        <div class="orientationZ"></div>
+    </div>
+
+    <p class="position"></p>
+
+
+</head>
+<body>
+<script type="text/javascript">
+
+    window.navigator.geolocation.getCurrentPosition(function (position) {
+        document.getElementsByClassName('position')[0].innerText=position;
+    },function () {
+        alert('获取信息失败')
+    })
+    
+    
+    //监听设备传感器，判断是否晃动
+    window.addEventListener('devicemotion',function (event) {
+        document.getElementsByClassName('devicemotionX')[0].innerText='x'+event.acceleration.x;
+        document.getElementsByClassName('devicemotionY')[0].innerText='y'+event.acceleration.y;
+        document.getElementsByClassName('devicemotionZ')[0].innerText='z'+event.acceleration.z;
+        if(event.acceleration.x>9 ||event.acceleration.y>9 || event.acceleration.z>9){
+            console.log('正在晃动')
+        }
+    })
+
+    //陀螺仪
+    window.addEventListener('deviceorientation',function (event) {
+        document.getElementsByClassName('orientationX')[0].innerText='x'+event.alpha;
+        document.getElementsByClassName('devicemotionY')[0].innerText='y'+event.beta;
+        document.getElementsByClassName('devicemotionZ')[0].innerText='z'+event.gamma;
+    })
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

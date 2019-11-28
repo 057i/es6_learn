@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>传感器加速器api判断是否晃动</title>
+</head>
+<body>
+
+<div class="main"></div>
+<script type="text/javascript">
+    window.addEventListener('devicemotion',function (event) {
+        document.getElementsByClassName('main')[0].innerText='x:'+event.acceleration.x
+                                                            + '  y:'+event.acceleration.y
+                                                            +'   z:'+event.acceleration.z;
+        if(event.acceleration.x>9 ||event.acceleration.y>9 || event.acceleration.z>9){
+            console.log('正在晃动')
+        }
+    })
+
+
+</script>
+
+</body>
+</html>

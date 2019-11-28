@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+    //必须翻墙使用，v8引擎依赖google地图，必须是https协议
+    window.navigator.geolocation.getCurrentPosition(function (position) {
+        console.log(position)
+    },function () {
+        console.log('获取地理位置失败')
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text">
+<button>点击</button>
+<script type="text/javascript">
+    let arr=[];
+    let oInput=document.getElementsByTagName("input")[0];
+    let oBtn=document.getElementsByTagName("button")[0];
+    oBtn.onclick=function () {
+        arr.push(oInput.value);
+        // if(arr.length==5){
+            // show(arr)
+            newShow(arr);
+
+        // }
+    }
+    function show(arr) {
+        console.log(...arr)
+    }
+    let newShow=after(5,show);
+    //高阶函数模拟回调
+    function after(num,func) {
+        var self=this;
+        return function () {
+            if(--num==0){
+                func.apply(window,arguments);//这里的arguments是newShow()传过来的
+            }
+        }
+    }
+
+
+</script>
+
+
+</body>
+
+
+
+
+</html>

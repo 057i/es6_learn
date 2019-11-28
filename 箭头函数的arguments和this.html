@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    // 箭头函数写在全局,或者箭头函数外层没有普通函数包裹，不管在那里调用,this都指向window；和普通函数不同
+    //箭头函数内部的arguments和this由定义时最接近的外层的arguments和this决定他的值
+    let sum=()=>{
+        console.log(this);//指向window
+        // console.log(arguments);全局箭头函数的外层没有普通函数包裹，获取不到arguments，报错
+    }
+    let obj={
+        fn:sum,//指向全局的箭头函数sum
+        fc:()=>{
+            console.log(this);
+        },
+        //或者写成fd:function也行
+        fd(){
+            let sum=()=>{
+             //箭头函数的this是定义时的最接近的外层普通函数决定的
+                console.log(this)
+            }
+            return sum
+        }
+    }
+
+
+    
+    obj.fn();//返回window
+    obj.fc()//返回window
+    let newSum=obj.fd();//接受箭头函数最接近的外层普通函数
+    newSum();//obj,箭头函数执行，但是不会改变它的this指向，因为箭头函数的this指向在定义后就不能改变了
+
+
+
+    //箭头函数中的this指向的例子
+
+    var obj1={
+        ms:'abc',
+        fn(){
+            setTimeout(function () {
+                console.log(this.ms,this);//this指向window
+            },500)
+        },
+        fd(){
+            setTimeout(()=>{
+                console.log(this.ms,this);//箭头函数this指向最近非箭头函数的this
+            },500)
+        }
+    }
+    let fn=obj1.fn();//返回undefined window
+    let fn1=obj1.fd();//返回abc obj
+
+
+
+
+
+
+
+
+
+
+    // 箭头函数在数组高级编程中是很友好的
+    var arr=[10,20,30,40,58,9,62,12,13];
+    arr.map(function (ele,index) {
+        console.log(ele*ele)  // 100 400 900 1600 3364 81 3844 144 169
+    })
+
+    //升级写法
+    console.log(arr.map(ele=>ele*ele));//[100, 400, 900, 1600, 3364, 81, 3844, 144, 169]
+
+    console.log(arr.filter(ele=>ele>20))//[30, 40, 58, 62]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

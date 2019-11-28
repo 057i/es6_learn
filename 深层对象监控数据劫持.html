@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="demo">
+<div id="show"></div>
+<script>
+    //浅层对象对象监控数据劫持（学会）
+    var oDiv=document.getElementById('show');
+    var oInput=document.getElementById('demo');
+    var oData={
+        //深层次
+        valueObj:{
+            value:'duyi',
+            name:'xixi'
+        },
+        name:'cst',
+
+    };
+    oInput.oninput=function () {
+        oData.valueObj.value=this.value;
+    }
+    function upDate() {
+        console.log('更新咯')
+        oDiv.innerText=oData.valueObj.value;
+    }
+    upDate()
+
+
+    //监控对象的某个属性是否发生改变函数
+    function Observer(data) {
+        //判断是否存在以及判断是否是对象
+        if(!data ||typeof data !='object'){
+            return data
+        }
+        //Object.keys()返回对象可枚举属性和方法的数组，在递归的时候是循环对象里面的对象属性
+        Object.keys(data).forEach(function (key,index) {
+            definedRective(data,key,data[key])
+        })
+
+    }
+    //监控对象函数
+    function definedRective(data,key,val){
+        //递归思想，监控对象里面对象属性值是否发生改变
+        Observer(val)
+
+        //调用es5的Objetc.defineProperty方法监控值，只能监控被赋值使用时传入的值，要是后期增加属性的值变化，没法检测到
+        Object.defineProperty(data,key,{
+            get (){
+                console.log('getgetget')
+                return val
+            },
+            set(newVal){
+                if(newVal==val){
+                    return;
+                }
+                val=newVal;
+                upDate();
+            }
+        })
+    }
+
+    Observer(oData)
+    oData.valueObj.value=10;
+    console.log(oDiv.innerText);//返回10，数据劫持成功
+
+
+    //vue针对数组更新，vue3.0版本以前写法，了解；Object.definedProperty无法监控数组
+    let arr=[];
+    let {push}=Array.prototype;//解构赋值，在prototype中找push的值赋给前面
+    function update() {
+        console.log('更新成功');
+    }
+    //把定义属性定义在数组原型链上
+    Object.defineProperty(Array.prototype,'push',{
+        //调用push时候会自动找value
+        value:(function () {
+            //箭头函数，加...运算符收集功能
+            return (...arg)=>{
+                push.apply(arr,arg);
+                update();
+            }
+        })()
+    })
+    arr.push(1,3)
+
+
+
+    function father() {
+        var n=10;
+        function son() {
+            n++;
+            console.log(n)
+        }
+        return son
+    }
+    father();
+    console.log(window)
+    var result=son;
+    result()
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

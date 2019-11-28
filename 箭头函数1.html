@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    // es6中箭头函数标准写法
+    // let sum=(a,b)=>{
+    //     return a+b
+    // }
+    // console.log(sum(10,20));//打印30
+
+    // [let ()=>{}]  错误箭头函数写法//
+
+    //改进:因为语句就一句，可以省去花括号
+    let sum=(a,b)=>a+b;
+    console.log(sum(10,10))  //20
+
+
+    // 箭头函数解析成数组
+    let add = (a, b) => [a, b]
+    console.log(add(10, 20))  // [10,20]
+
+
+    //将箭头函数解析成对象
+    let sum1 = (a, b) => ({a: a, b: b})
+    console.log(sum1(10, 20))//返回{a: 10, b: 20}
+
+
+    //普通函数形参名可以重复，箭头函数中的形参名不可以重复
+    let f = function (a, a) {
+        console.log(a + a)
+    }
+
+    //会报错
+    // let sum1=(a,a)=>{
+    //     console.log(a+a)
+    // }
+
+    // 高阶函数(函数里面嵌套函数或者函数里面又返回函数的，可以做柯理化函数，高阶函数要等参数传完才会全部执行完
+    // 不然传到哪，执行到哪)
+    function sum2(x) {
+        return function (y) {
+            return function (z) {
+                return x + y + z
+            }
+        }
+    }
+
+    var sum3 = sum2(1);
+    var sum4 = sum3(2);
+    console.log(sum4(3));
+    // console.log(sum2(1)(2)(3))也可以这么执行
+
+
+    //高阶函数用es6箭头函数写，会方便很多，可读性更高
+    let sum5 = x => y => z => x + y + z;
+    console.log(sum5(5)(6)(5))//返回16
+
+    // 或者是
+    let sum6 = (x) => {
+        return (y) => {
+            return (z) => {
+                return x + y + z
+            }
+        }
+    }
+    console.log(sum6(10)(20)(30))
+
+    //箭头函数没有arguments和this,箭头函数的arguments和this指向的是距离它最近一层非箭头函数的arguments和this
+    function outer() {
+        let sum = (a, b) => {
+            console.log(a, b, arguments, this)
+            console.log(arguments)//指向[10,20]外层普通函数的
+        }
+        sum(1, 2)
+        console.log(arguments);//打印[10 ,20]
+    }
+
+    outer(10, 20)
+
+
+    let arr = [(x,y) => {
+        return x+y
+    }]
+    console.log(arr[0](10,20))//返回30
+
+
+
+    //柯理化应用(高阶函数的应用)
+    function Curry() {
+        return (b)=>{//使用箭头函数返回外层的arguments
+            console.log(arguments,b)
+        }
+    }
+    Curry(10,20)('a')//返回10,20,后面那个()加不加无所谓，因为没有函数为他执行
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

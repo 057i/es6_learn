@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+    //js是单线程的，但是worker是真正的多线程，和ajax那些伪多线程不一样
+    // Worker创造出来的多线程之间通过postMessage和onmessage互相传递数据通信
+
+    var startTime=Date.now();
+    console.log('========');
+    console.log('========');
+    console.log('========');
+    var result=0;
+    var num=1000000;
+    //开启异步线程，不会阻塞，一个线程计算，一个线程渲染页面
+    var worker=new Worker('./work.js');
+    worker.postMessage({
+        data:num
+    })
+    worker.onmessage=function (e) {
+        console.log(e.data)
+    }
+
+    //循环方式写相加
+    // for(var i=0;i<num;i++){
+    //     result+=i;
+    // }
+    console.log('========');
+    console.log('========');
+    console.log('========');
+    var endTime=Date.now()
+    console.log(result);
+    console.log(endTime-startTime);
+
+
+
+</script>
+
+</body>
+</html>

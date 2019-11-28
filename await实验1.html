@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    async function test1() {
+        let promise=new Promise((res,rej)=>{
+            setTimeout(function () {
+                console.log(1000)
+            },3000)
+        })
+        //会等待promise得到值后打印3秒
+        // awit会让javascript等待
+        let result=await promise;
+        alert(result)
+    }
+    test1()
+    
+    
+    async function f() {
+        throw new Error('有错误')
+    }
+    f();//将不会等待！！！直接抛出错误
+    
+    
+    
+    
+</script>
+
+</body>
+</html>

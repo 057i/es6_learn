@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //异步异常错误写法
+        // try {
+        //     setTimeout(() => {
+        //         throw new Error('fail');
+        //     }, 1000);
+        // } catch (e) {
+        //     console.log(e);
+        // }    
+
+
+
+        //捕获异步异常正确的写法
+        setTimeout(() => {
+            try {
+                throw new Error('fail');
+            } catch (e) {
+                console.log(e)
+            }
+
+        }, 1000);
+
+
+
+        // Promise中的catch也是只能捕获到同步异常
+
+
+        //尝试用Promise中的catch来捕获异步的异常
+        function doSomething() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    throw new Error("fail")
+                }, 1000)
+            })
+        }
+
+        doSomething()
+            .then((resolveVal) => {
+                console.log(resolveVal)
+            }, (rejectVal) => {
+                console.log(rejectVal)
+            })
+            .catch(e => {
+                console.log(e)
+            })
+
+        // ======================================结果不行
+
+
+
+
+        // 尝试用async和await解决异步错误问题
+        //(结果还是不行，因为async/await是用promise实现的)
+        function doAnotherthing() {
+            setTimeout(() => {
+                throw new Error("fail")
+            }, 1000)
+        }
+
+        async function main() {
+            await doAnotherthing()
+        }
+        main()
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>
